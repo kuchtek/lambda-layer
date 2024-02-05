@@ -2,7 +2,7 @@ name: Create Lambda Layer
 
 on:
   push:
-    tags: [ 'v*.*.*' ]
+    branches: '**'
 
 jobs:
   build:
