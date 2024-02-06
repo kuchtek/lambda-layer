@@ -1,4 +1,5 @@
 FROM public.ecr.aws/lambda/python:3.11 as builder
+ENTRYPOINT []
 ENV ODBCINI=/opt/odbc.ini
 ENV ODBCSYSINI=/opt/
 ARG UNIXODBC_VERSION=2.3.9
