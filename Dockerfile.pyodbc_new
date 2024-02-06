@@ -16,5 +16,5 @@ RUN ACCEPT_EULA=Y yum install -y msodbcsql17
 ENV CFLAGS="-I/opt/include"
 ENV LDFLAGS="-L/opt/lib"
 RUN mkdir /opt/python/ && cd /opt/python/ && pip install pyodbc -t .
-WORKDIR /opt
+#WORKDIR /opt
 # RUN zip -r /layer.zip .
