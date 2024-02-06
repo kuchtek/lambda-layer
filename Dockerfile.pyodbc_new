@@ -17,4 +17,4 @@ ENV CFLAGS="-I/opt/include"
 ENV LDFLAGS="-L/opt/lib"
 RUN mkdir /opt/python/ && cd /opt/python/ && pip install pyodbc -t .
 WORKDIR /opt
-RUN zip -r /layer.zip .
+# RUN zip -r /layer.zip .
