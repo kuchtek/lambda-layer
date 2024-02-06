@@ -1,4 +1,4 @@
-name: Create Lambda Layer - PyODBC -test 
+name: Create Lambda Layer - PyODBC
 
 on: workflow_dispatch
 
@@ -26,11 +26,12 @@ jobs:
 
     - name: Build the Docker image
       run: |
-        docker buildx build --load --file=Dockerfile.pyodbc_new --tag pyodbc-mssql-${{ env.architecture }} --build-arg python_version=${{ env.python_version }}  .
+        docker buildx build --load --file Dockerfile.pyodbc_new --tag pyodbc-mssql-${{ env.architecture }} --build-arg python_version=${{ env.python_version }} .
 
     - name: Create Container from Image
       run: |
-        docker run --rm --volume $(pwd):/tmp pyodbc-mssql-${{ env.architecture }} cp /layer.zip /tmp/pyodbc-mssql-python-${{ env.python_version }}-${{ env.architecture }}.zip
+        # docker run --rm --volume $(pwd):/tmp pyodbc-mssql-${{ env.architecture }} cp /layer.zip /tmp/pyodbc-mssql.zip
+        docker run --rm --volume $(pwd):/tmp pyodbc-mssql-${{ env.architecture }} cp -r /opt /tmp/opt
 
     # - name: Run Tests
     #   run: |
@@ -43,4 +44,4 @@ jobs:
       uses: actions/upload-artifact@v3
       with:
         name: pyodbc-mssql-python-${{ env.python_version }}-${{ env.architecture }}
-        path: pyodbc-mssql-python-${{ env.python_version }}-${{ env.architecture }}.zip
+        path: /tmp/opt/
