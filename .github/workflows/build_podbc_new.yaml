@@ -1,0 +1,46 @@
+name: Create Lambda Layer - PyODBC -test 
+
+on: workflow_dispatch
+
+jobs:
+  build:
+    runs-on: ubuntu_latest
+    env:
+      architecture: "x86_64"
+      python_version: "3.11"
+
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Set up QEMU
+      uses: docker/setup-qemu-action@v3
+      with:
+        platforms: ${{ env.architecture }}
+
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v3
+
+    - name: Shell Variables
+      run: |
+        export DOCKER_DEFAULT_PLATFORM=linux/${{ env.architecture }}
+
+    - name: Build the Docker image
+      run: |
+        docker buildx build --load --file=Dockerfile.pyodbc_new --tag pyodbc-mssql-${{ env.architecture }} --build-arg python_version=${{ env.python_version }}  .
+
+    - name: Create Container from Image
+      run: |
+        docker run --rm --volume $(pwd):/tmp pyodbc-mssql-${{ env.architecture }} cp /layer.zip /tmp/pyodbc-mssql-python-${{ env.python_version }}-${{ env.architecture }}.zip
+
+    # - name: Run Tests
+    #   run: |
+    #     docker run -d --name tester --entrypoint tail pyodbc-mssql-${{ env.architecture }} -f /dev/null
+    #     docker cp tests/test_pyodbc.py tester:/tmp
+    #     docker exec tester bash -c "pip install pytest"
+    #     docker exec tester bash -c "pytest /tmp/test_pyodbc.py"
+
+    - name: Upload layer artifact
+      uses: actions/upload-artifact@v3
+      with:
+        name: pyodbc-mssql-python-${{ env.python_version }}-${{ env.architecture }}
+        path: pyodbc-mssql-python-${{ env.python_version }}-${{ env.architecture }}.zip
