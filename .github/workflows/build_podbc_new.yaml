@@ -24,6 +24,11 @@ jobs:
       run: |
         export DOCKER_DEFAULT_PLATFORM=linux/${{ env.architecture }}
 
+    - name: List current dir
+      run: |
+        echo $pwd
+        ls $pwd
+
     - name: Build the Docker image
       run: |
         docker buildx build --load --file Dockerfile.pyodbc_new --tag pyodbc-mssql --build-arg python_version=${{ env.python_version }} .
