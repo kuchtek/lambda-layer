@@ -33,10 +33,10 @@ jobs:
         # docker run --rm --volume $(pwd):/tmp pyodbc-mssql-${{ env.architecture }} cp /layer.zip /tmp/pyodbc-mssql.zip
         docker run --rm --volume $(pwd):/tmp pyodbc-mssql cp -r /opt /tmp/opt
 
-    - name: List opt dir
-      run: |
-        ls $(pwd)/opt
-        ls $(pwd)
+    # - name: List opt dir
+    #   run: |
+    #     ls $(pwd)/opt
+    #     ls $(pwd)
 
     # - name: Run Tests
     #   run: |
@@ -48,4 +48,4 @@ jobs:
       uses: actions/upload-artifact@v3
       with:
         name: pyodbc-mssql-python-${{ env.python_version }}-${{ env.architecture }}
-        path: $(pwd)/opt/
+        path: $(pwd)/opt
