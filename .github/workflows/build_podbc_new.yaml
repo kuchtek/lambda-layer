@@ -53,4 +53,4 @@ jobs:
       uses: actions/upload-artifact@v3
       with:
         name: pyodbc-mssql-python-${{ env.python_version }}-${{ env.architecture }}
-        path: $(pwd)/opt
+        path: opt/
