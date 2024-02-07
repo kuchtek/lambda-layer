@@ -36,7 +36,7 @@ jobs:
     - name: Create Container from Image
       run: |
         # docker run --rm --volume $(pwd):/tmp pyodbc-mssql-${{ env.architecture }} cp /layer.zip /tmp/pyodbc-mssql.zip
-        docker run --rm --volume $(pwd):/tmp pyodbc-mssql cp -r /opt /tmp/opt
+        docker run --rm --volume $(pwd):/tmp pyodbc-mssql cp -r /opt /tmp/pyodbc
 
     # - name: List opt dir
     #   run: |
@@ -53,4 +53,4 @@ jobs:
       uses: actions/upload-artifact@v3
       with:
         name: pyodbc-mssql-python-${{ env.python_version }}-${{ env.architecture }}
-        path: opt/
+        path: pyodbc/
